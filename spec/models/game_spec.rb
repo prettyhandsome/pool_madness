@@ -26,7 +26,7 @@ RSpec.describe Game, type: :model do
     subject { tournament_tree.at(slot) }
 
     it "is a global id for the graph" do
-      expect(subject.id).to eq("#{tournament.id}~#{slot}")
+      expect(subject.id).to eq("Tournament~#{tournament.id}~#{slot}")
     end
   end
 
