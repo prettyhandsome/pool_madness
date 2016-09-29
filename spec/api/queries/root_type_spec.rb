@@ -72,7 +72,7 @@ RSpec.describe Queries::RootType do
     let(:bracket) { create(:bracket) }
     let(:user) { bracket.user }
     let(:ability) { Ability.new(user) }
-    let(:args) { { "model_id" => bracket.id} }
+    let(:args) { { "model_id" => bracket.id } }
 
     context "signed in" do
       context "as the bracket owner" do
