@@ -34,6 +34,10 @@ class Round
     end
   end
 
+  def regions
+    Team::REGIONS if ["Final Four", "Champion"].exclude?(name)
+  end
+
   def games
     tournament.round_for(number)
   end

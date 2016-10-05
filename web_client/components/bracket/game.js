@@ -1,15 +1,34 @@
 import React, { Component } from 'react'
+import TournamentTree from 'objects/tournament_tree'
 
 export default class Game extends Component {
+  tournamentTree = () => {
+    const { num_rounds, game_decisions, game_mask } = this.props.tournament
+    return new TournamentTree(num_rounds, game_decisions, game_mask)
+  }
+
+  bracketTree = () => {
+    if (this.props.bracket) {
+      const {num_rounds, game_decisions, game_mask} = this.props.bracket
+      return new TournamentTree(num_rounds, game_decisions, game_mask)
+    }
+    else {
+      return null
+    }
+  }
+
+  teamByStartingSlot = (slot) => {
+    return this.props.tournament.teams.find(t => t.starting_slot == slot)
+  }
+
   renderTeam = (game, pick, slot) => {
     let team = null
     let pickClass = ''
-
     if (slot == 1) {
       if (pick) {
-        team = pick.first_team
-        const game_team = game.first_team
-        if (team && (!team.still_playing || game_team) && game.round_number != 1) {
+        team = this.teamByStartingSlot(pick.firstTeamStartingSlot())
+        const game_team = this.teamByStartingSlot(game.firstTeamStartingSlot())
+        if (team && (!team.still_playing || game_team) && !game.isRoundOne()) {
           if (game_team && team.name == game_team.name) {
             pickClass = 'correct-pick'
           }
@@ -19,14 +38,14 @@ export default class Game extends Component {
         }
       }
       else {
-        team = game.first_team
+        team = this.teamByStartingSlot(game.firstTeamStartingSlot())
       }
     }
     else { // slot == 2
       if (pick) {
-        team = pick.second_team
-        const game_team = game.second_team
-        if (team && (!team.still_playing || game_team) && game.round_number != 1) {
+        team = this.teamByStartingSlot(pick.secondTeamStartingSlot())
+        const game_team = this.teamByStartingSlot(game.secondTeamStartingSlot())
+        if (team && (!team.still_playing || game_team) && !game.isRoundOne()) {
           if (game_team && team.name == game_team.name) {
             pickClass = 'correct-pick'
           }
@@ -36,7 +55,7 @@ export default class Game extends Component {
         }
       }
       else {
-        team = game.second_team
+        team = this.teamByStartingSlot(game.secondTeamStartingSlot())
       }
     }
 
@@ -48,8 +67,10 @@ export default class Game extends Component {
   }
 
   render() {
-    const {game, index, pick} = this.props
-
+    const { index, slot } = this.props
+    const game = this.tournamentTree().gameNodes[slot]
+    const bracketTree = this.bracketTree()
+    const pick = bracketTree ? bracketTree.gameNodes[slot] : null
     return <div className={`match m${index}`}>
       {this.renderTeam(game, pick, 1)}
       {this.renderTeam(game, pick, 2)}
