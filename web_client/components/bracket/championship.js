@@ -7,57 +7,50 @@ export default class Championship extends Component {
     return new TournamentTree(num_rounds, game_decisions, game_mask)
   }
 
-  // bracketTree = () => {
-  //   if (this.props.bracket) {
-  //     const {num_rounds, game_decisions, game_mask} = this.props.bracket
-  //     return new TournamentTree(num_rounds, game_decisions, game_mask)
-  //   }
-  //   else {
-  //     return null
-  //   }
-  // }
-  //
-  // championshipGame = () => {
-  //   const { num_rounds, game_decisions, game_mask } = this.props.tournament
-  //   const tournamentTree = new TournamentTree(num_rounds, game_decisions, game_mask)
-  //   return tournamentTree.gameNodes[1]
-  // }
-  //
+  bracketTree = () => {
+    if (this.props.bracket) {
+      const { num_rounds } = this.props.tournament
+      const { game_decisions, game_mask } = this.props.bracket
+      return new TournamentTree(num_rounds, game_decisions, game_mask)
+    }
+    else {
+      return null
+    }
+  }
+
   teamByStartingSlot = (slot) => {
     return this.props.tournament.teams.find(t => t.starting_slot == slot)
   }
 
-  // championshipPick = () => {
-  //   const bracket = this.props.bracket
-  //   if (bracket && bracket.picks) {
-  //     return bracket.picks.find(pick => pick.slot == 1)
-  //   }
-  // }
-
-
   championName = () => {
-    // const { game, pick } = this.props
-    //
-    // const obj = pick || game
-    const obj = this.tournamentTree().gameNodes[1]
-    if (obj.winningTeamStartingSlot()) {
-      return this.teamByStartingSlot(obj.winningTeamStartingSlot()).name
+    const tournamentNode = this.tournamentTree().gameNodes[1]
+    const pickNode = this.bracketTree() ? this.bracketTree().gameNodes[1] : null
+    const startingSlot = pickNode ? pickNode.winningTeamStartingSlot() : tournamentNode.winningTeamStartingSlot()
+    if (startingSlot) {
+      return this.teamByStartingSlot(startingSlot).name
     }
   }
 
   pickLabel = () => {
-  //   return null;
-  //   const { game, pick } = this.props
-  //   if (game && pick) {
-  //     if(game.winning_team && pick.winning_team) {
-  //       if(game.winning_team.name == pick.winning_team.name) {
-  //         return 'correct-pick'
-  //       }
-  //       else {
-  //         return 'eliminated'
-  //       }
-  //     }
-  //   }
+    let pickClass = ''
+    const game = this.tournamentTree().gameNodes[1]
+    const bracketTree = this.bracketTree()
+    const pick = bracketTree ? bracketTree.gameNodes[1] : null
+
+    if (game && pick) {
+      const team = this.teamByStartingSlot(pick.firstTeamStartingSlot())
+      const game_team = this.teamByStartingSlot(game.firstTeamStartingSlot())
+      if (team && (!team.still_playing || game_team)) {
+        if (game_team && team.name == game_team.name) {
+          pickClass = 'correct-pick'
+        }
+        else {
+          pickClass = 'eliminated'
+        }
+      }
+
+      return pickClass
+    }
   }
 
   render() {

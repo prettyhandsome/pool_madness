@@ -9,7 +9,8 @@ export default class Game extends Component {
 
   bracketTree = () => {
     if (this.props.bracket) {
-      const {num_rounds, game_decisions, game_mask} = this.props.bracket
+      const { num_rounds } = this.props.tournament
+      const { game_decisions, game_mask } = this.props.bracket
       return new TournamentTree(num_rounds, game_decisions, game_mask)
     }
     else {

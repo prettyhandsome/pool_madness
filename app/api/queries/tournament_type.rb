@@ -18,14 +18,10 @@ module Queries
     field :teams, !types[TeamType]
 
     field :game_decisions, !types.String do
-      resolve lambda do |tournament, _args, _context|
-        Array.new(2**tournament.num_rounds) { |i| (tournament.game_decisions & (1 << i)).zero? ? "0" : "1" }.join("")
-      end
+      resolve -> (tournament, _args, _context) { Array.new(2**tournament.num_rounds) { |i| (tournament.game_decisions & (1 << i)).zero? ? "0" : "1" }.join("") }
     end
     field :game_mask, !types.String do
-      resolve lambda do |tournament, _args, _context|
-        Array.new(2**tournament.num_rounds) { |i| (tournament.game_mask & (1 << i)).zero? ? "0" : "1" }.join("")
-      end
+      resolve -> (tournament, _args, _context) { Array.new(2**tournament.num_rounds) { |i| (tournament.game_mask & (1 << i)).zero? ? "0" : "1" }.join("") }
     end
   end
 end
