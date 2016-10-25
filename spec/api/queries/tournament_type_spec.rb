@@ -4,7 +4,7 @@ RSpec.describe Queries::TournamentType do
   subject { Queries::TournamentType }
 
   context "fields" do
-    let(:fields) { %w(id name num_rounds games_remaining archived tip_off rounds games) }
+    let(:fields) { %w(id name num_rounds games_remaining archived tip_off rounds games teams game_mask game_decisions) }
 
     it "has the proper fields" do
       expect(subject.fields.keys).to match_array(fields)

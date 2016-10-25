@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { groupBy } from 'lodash'
-
 import Region from 'components/bracket/region'
 import Game from 'components/bracket/game'
 import { range, chunk } from 'lodash'
@@ -29,23 +27,29 @@ export default class Round extends Component {
     const {round, tournament, bracket} = this.props
     if (round.regions) {
       return <div className={`round round${round.number}`}>
-        {round.regions.map((r, i) => <Region key={i}
-                                             index={i + 1}
-                                             region={r}
-                                             gameSlots={this.gameSlotsByRegion()[i]}
-                                             tournament={tournament}
-                                             bracket={bracket}
-                                             roundNumber={round.number}/>
+        {round.regions.map((r, i) =>
+          <Region
+            key={i}
+            index={i + 1}
+            region={r}
+            gameSlots={this.gameSlotsByRegion()[i]}
+            tournament={tournament}
+            bracket={bracket}
+            roundNumber={round.number}
+          />
         )}
       </div>
     }
     else {
       return <div className={`round round${round.number}`}>
-        {this.gameSlots().map((slot, i) => <Game key={i}
-                                          index={i + 1}
-                                          slot={slot}
-                                          tournament={tournament}
-                                          bracket={bracket}/>
+        {this.gameSlots().map((slot, i) =>
+          <Game
+            key={i}
+            index={i + 1}
+            slot={slot}
+            tournament={tournament}
+            bracket={bracket}
+          />
         )}
       </div>
     }

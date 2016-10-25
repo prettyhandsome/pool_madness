@@ -6,11 +6,13 @@ export default class Region extends Component {
     const { gameSlots, index, region, roundNumber, tournament, bracket } = this.props
     return <div className={`region region${index}`}>
       {roundNumber == 1 ? <div className={`region-label region${index}`}>{region}</div> : null}
-      {gameSlots.map((slot, i) => <Game key={i}
-                                        index={i+1}
-                                        slot={slot}
-                                        tournament={tournament}
-                                        bracket={bracket} />
+      {gameSlots.map((slot, i) =>
+        <Game key={i}
+              index={i+1}
+              slot={slot}
+              tournament={tournament}
+              bracket={bracket}
+        />
       )}
     </div>
   }
