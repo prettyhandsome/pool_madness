@@ -18,14 +18,21 @@ export default class Championship extends Component {
     }
   }
 
+  game = () => {
+    return this.tournamentTree().gameNodes[1]
+  }
+
+  pick = () => {
+    const bracketTree = this.bracketTree()
+    return bracketTree ? bracketTree.gameNodes[1] : null
+  }
+
   teamByStartingSlot = (slot) => {
     return this.props.tournament.teams.find(t => t.starting_slot == slot)
   }
 
   championName = () => {
-    const tournamentNode = this.tournamentTree().gameNodes[1]
-    const pickNode = this.bracketTree() ? this.bracketTree().gameNodes[1] : null
-    const startingSlot = pickNode ? pickNode.winningTeamStartingSlot() : tournamentNode.winningTeamStartingSlot()
+    const startingSlot = this.pick() ? this.pick().winningTeamStartingSlot() : this.game().winningTeamStartingSlot()
     if (startingSlot) {
       return this.teamByStartingSlot(startingSlot).name
     }
@@ -33,9 +40,8 @@ export default class Championship extends Component {
 
   pickLabel = () => {
     let pickClass = ''
-    const game = this.tournamentTree().gameNodes[1]
-    const bracketTree = this.bracketTree()
-    const pick = bracketTree ? bracketTree.gameNodes[1] : null
+    const game = this.game()
+    const pick = this.pick()
 
     if (game && pick) {
       const team = this.teamByStartingSlot(pick.firstTeamStartingSlot())
