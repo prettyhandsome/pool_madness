@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TournamentTree from 'objects/tournament_tree'
+import Team from 'objects/team'
 
 export default class Championship extends Component {
   tournamentTree = () => {
@@ -28,7 +29,7 @@ export default class Championship extends Component {
   }
 
   teamByStartingSlot = (slot) => {
-    return this.props.tournament.teams.find(t => t.starting_slot == slot)
+    return new Team(this.props.tournament, this.tournamentTree(), slot)
   }
 
   championName = () => {
@@ -46,7 +47,7 @@ export default class Championship extends Component {
     if (game && pick) {
       const team = this.teamByStartingSlot(pick.firstTeamStartingSlot())
       const game_team = this.teamByStartingSlot(game.firstTeamStartingSlot())
-      if (team && (!team.still_playing || game_team)) {
+      if (team && (!team.stillPlaying() || game_team)) {
         if (game_team && team.name == game_team.name) {
           pickClass = 'correct-pick'
         }
