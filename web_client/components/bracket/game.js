@@ -3,15 +3,15 @@ import TournamentTree from 'objects/tournament_tree'
 
 export default class Game extends Component {
   tournamentTree = () => {
-    const { num_rounds, game_decisions, game_mask } = this.props.tournament
-    return new TournamentTree(num_rounds, game_decisions, game_mask)
+    const { rounds, game_decisions, game_mask } = this.props.tournament
+    return new TournamentTree(rounds.length, game_decisions, game_mask)
   }
 
   bracketTree = () => {
     if (this.props.bracket) {
-      const { num_rounds } = this.props.tournament
+      const { rounds } = this.props.tournament
       const { game_decisions, game_mask } = this.props.bracket
-      return new TournamentTree(num_rounds, game_decisions, game_mask)
+      return new TournamentTree(rounds.length, game_decisions, game_mask)
     }
     else {
       return null

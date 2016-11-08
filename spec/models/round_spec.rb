@@ -129,17 +129,4 @@ RSpec.describe Round do
       end
     end
   end
-
-  describe "games" do
-    let(:tournament) { subject.tournament }
-
-    it "is a set of games in the tournament for the round" do
-      (1..tournament.num_rounds).to_a.each do |round_number|
-        subject.number = round_number
-        expected_games = tournament.round_for(round_number)
-        expect(subject.games.size).to eq(expected_games.size)
-        expect(subject.games.map(&:round_number).uniq).to eq([round_number])
-      end
-    end
-  end
 end

@@ -8,8 +8,8 @@ import TieBreaker from 'components/bracket/tie_breaker'
 class Tournament extends Component {
   render() {
     const { tournament, bracket } = this.props
-    const { num_rounds, rounds } = tournament
-    const fieldClass = num_rounds >= 6 ? 'field-64' : 'sweet-16'
+    const { rounds } = tournament
+    const fieldClass = rounds.length >= 6 ? 'field-64' : 'sweet-16'
     const tieBreaker = bracket ? bracket.tie_breaker : null
 
     return <div className='bracket'>
@@ -29,7 +29,6 @@ export default Relay.createContainer(Tournament, {
   fragments: {
     tournament: () => Relay.QL`
       fragment on Tournament {
-        num_rounds
         rounds {
           name
           number

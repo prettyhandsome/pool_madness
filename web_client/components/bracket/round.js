@@ -7,7 +7,7 @@ export default class Round extends Component {
 
   gameSlots = () => {
     const { tournament, round } = this.props
-    const depth_for = range(1, tournament.num_rounds + 1).reverse().indexOf(round.number) + 1
+    const depth_for = range(1, tournament.rounds.length + 1).reverse().indexOf(round.number) + 1
     if (depth_for == 0) {
       return [1]
     }
