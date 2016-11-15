@@ -29,7 +29,10 @@ export default class Championship extends Component {
   }
 
   teamByStartingSlot = (slot) => {
-    return new Team(this.props.tournament, this.tournamentTree(), slot)
+    if (slot) {
+      return new Team(this.props.tournament, this.tournamentTree(), slot)
+    }
+    return null
   }
 
   championName = () => {
@@ -45,8 +48,8 @@ export default class Championship extends Component {
     const pick = this.pick()
 
     if (game && pick) {
-      const team = this.teamByStartingSlot(pick.firstTeamStartingSlot())
-      const game_team = this.teamByStartingSlot(game.firstTeamStartingSlot())
+      const team = this.teamByStartingSlot(pick.winningTeamStartingSlot())
+      const game_team = this.teamByStartingSlot(game.winningTeamStartingSlot())
       if (team && (!team.stillPlaying() || game_team)) {
         if (game_team && team.name == game_team.name) {
           pickClass = 'correct-pick'
