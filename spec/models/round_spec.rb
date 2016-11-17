@@ -24,6 +24,38 @@ RSpec.describe Round do
     end
   end
 
+  describe "regions" do
+    let(:tournament) { create(:tournament) }
+
+    context "earlier rounds" do
+      let(:rounds) {
+        (1..(tournament.num_rounds - 2)).to_a.map do |i|
+          build(:round, tournament: tournament, number: i)
+        end
+      }
+
+      it "is the four regions" do
+        rounds.each do |round|
+          expect(round.regions).to eq(Team::REGIONS)
+        end
+      end
+    end
+
+    context "last two rounds" do
+      let(:rounds) {
+        [tournament.num_rounds - 1, tournament.num_rounds].map do |i|
+          build(:round, tournament: tournament, number: i)
+        end
+      }
+
+      it "is nil" do
+        rounds.each do |round|
+          expect(round.regions).to be_nil
+        end
+      end
+    end
+  end
+
   describe "name" do
     subject { build(:round, tournament: tournament, number: 1) }
 

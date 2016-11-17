@@ -126,4 +126,26 @@ RSpec.describe Queries::BracketType do
       end
     end
   end
+
+  context "bitmasks" do
+    let(:bracket) { create(:bracket, :completed) }
+    let(:context) { { current_user: bracket.user, current_ability: Ability.new(bracket.user) } }
+    let(:resolved) { subject.resolve(bracket, nil, context) }
+
+    describe "game_decisions" do
+      subject { Queries::BracketType.fields["game_decisions"] }
+
+      it "is a string of zeros and ones representing the bracket decisions" do
+        expect(resolved).to eq(Array.new(2**bracket.tournament.num_rounds) { |i| (bracket.tree_decisions & (1 << i)).zero? ? "0" : "1" }.join)
+      end
+    end
+
+    describe "game_mask" do
+      subject { Queries::BracketType.fields["game_mask"] }
+
+      it "is a string of zeros and ones representing the bracket bitmask" do
+        expect(resolved).to eq(Array.new(2**bracket.tournament.num_rounds) { |i| (bracket.tree_mask & (1 << i)).zero? ? "0" : "1" }.join)
+      end
+    end
+  end
 end
