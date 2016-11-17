@@ -26,7 +26,6 @@ module Queries
     end
 
     field :pool, !PoolType
-    field :picks, !types[GameType]
 
     field :game_decisions, !types.String do
       resolve -> (bracket, _args, _context) { Array.new(2**bracket.tournament.num_rounds) { |i| (bracket.tree_decisions & (1 << i)).zero? ? "0" : "1" }.join("") }
