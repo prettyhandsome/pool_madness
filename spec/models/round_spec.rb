@@ -28,11 +28,11 @@ RSpec.describe Round do
     let(:tournament) { create(:tournament) }
 
     context "earlier rounds" do
-      let(:rounds) {
+      let(:rounds) do
         (1..(tournament.num_rounds - 2)).to_a.map do |i|
           build(:round, tournament: tournament, number: i)
         end
-      }
+      end
 
       it "is the four regions" do
         rounds.each do |round|
@@ -42,11 +42,11 @@ RSpec.describe Round do
     end
 
     context "last two rounds" do
-      let(:rounds) {
+      let(:rounds) do
         [tournament.num_rounds - 1, tournament.num_rounds].map do |i|
           build(:round, tournament: tournament, number: i)
         end
-      }
+      end
 
       it "is nil" do
         rounds.each do |round|
