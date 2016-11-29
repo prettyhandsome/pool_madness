@@ -3,7 +3,7 @@
 %h1 #{@pool.name} Pool Possibilities
 
 = cache cache_key_for_possibilities(@pool) do
-  - all_outcomes_by_winners(@outcome_set, @pool).each do |best_possible, championships|
+  - @outcome_set.all_outcomes_by_winners(@pool).each do |best_possible, championships|
     - championships.each do |championship|
       %h3 #{championship.winner.name} BEATS #{championship.loser.name}
     %ul

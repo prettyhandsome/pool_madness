@@ -20,5 +20,6 @@ module Queries
     field :first_team, TeamType
     field :second_team, TeamType
     field :winning_team, TeamType, property: :team
+    field :losing_team, TeamType, property: :loser
   end
 end
