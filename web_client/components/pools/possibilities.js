@@ -5,15 +5,20 @@ import {ordinalInWord} from 'utils/ordinals'
 class WinningBrackets extends Component {
   render() {
     const { position, brackets } = this.props
-    return (
-      <li>{ordinalInWord(position)}: {brackets.map(b => b.name).join(', ')}</li>
-    )
+    if (brackets) {
+      return (
+        <li>{ordinalInWord(position)}: {brackets.map(b => b.name).join(', ')}</li>
+      )
+    }
+    else {
+      return null
+    }
   }
 }
 class Championship extends Component {
   render() {
-    const { winner, loser } = this.props.championship
-    return <h3>{winner.name} BEATS {loser.name}</h3>
+    const { winning_team, losing_team } = this.props.championship
+    return <h3>{winning_team.name} BEATS {losing_team.name}</h3>
   }
 }
 

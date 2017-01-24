@@ -192,11 +192,6 @@
             },
             {
               "kind": "OBJECT",
-              "name": "Game",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
               "name": "Pool",
               "ofType": null
             },
@@ -1075,7 +1070,7 @@
                 "name": "List",
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Game",
+                  "name": "PossibleGame",
                   "ofType": null
                 }
               },
@@ -1146,8 +1141,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Game",
-          "description": "A game in a tournament",
+          "name": "PossibleGame",
+          "description": "A possible outcome of a game",
           "fields": [
             {
               "name": "first_team",
@@ -1159,24 +1154,6 @@
                 "kind": "OBJECT",
                 "name": "Team",
                 "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "id",
-              "description": null,
-              "args": [
-
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": "Non-Null",
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1332,11 +1309,7 @@
           ],
           "inputFields": null,
           "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Node",
-              "ofType": null
-            }
+
           ],
           "enumValues": null,
           "possibleTypes": null
