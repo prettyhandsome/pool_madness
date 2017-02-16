@@ -24,7 +24,7 @@ export default class Round extends Component {
   }
 
   render() {
-    const {round, tournament, bracket} = this.props
+    const {round, tournament, bracket, slotClickHandler} = this.props
     if (round.regions) {
       return <div className={`round round${round.number}`}>
         {round.regions.map((r, i) =>
@@ -36,6 +36,7 @@ export default class Round extends Component {
             tournament={tournament}
             bracket={bracket}
             roundNumber={round.number}
+            slotClickHandler={slotClickHandler}
           />
         )}
       </div>
@@ -49,6 +50,7 @@ export default class Round extends Component {
             slot={slot}
             tournament={tournament}
             bracket={bracket}
+            slotClickHandler={slotClickHandler}
           />
         )}
       </div>

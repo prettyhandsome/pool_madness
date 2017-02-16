@@ -2,6 +2,23 @@ import React, { Component } from 'react'
 import TournamentTree from 'objects/tournament_tree'
 import Team from 'objects/team'
 
+class GameSlot extends Component {
+  handleClick = () => {
+    const { gameSlot, decision, slotClickHandler } = this.props
+    if (slotClickHandler) {
+      slotClickHandler(gameSlot, decision)
+    }
+  }
+
+  render() {
+    const { team, decision, pickClass } = this.props
+    if (team) {
+      return <p className={`slot slot${decision} ${pickClass}`.trim()} onClick={this.handleClick}><span className="seed">{team.seed}</span> {team.name}</p>
+    }
+    return <p className={`slot slot${decision}`}/>
+  }
+}
+
 export default class Game extends Component {
   tournamentTree = () => {
     const { rounds, game_decisions, game_mask } = this.props.tournament
@@ -24,6 +41,11 @@ export default class Game extends Component {
       return new Team(this.props.tournament, this.tournamentTree(), slot)
     }
     return null
+  }
+
+  handleSlotClick = (event) => {
+    debugger
+    this.props.slotClickHandler(event)
   }
 
   renderTeam = (game, pick, slot) => {
@@ -64,15 +86,11 @@ export default class Game extends Component {
       }
     }
 
-    if (team) {
-      return <p className={`slot slot${slot} ${pickClass}`.trim()}><span className="seed">{team.seed}</span> {team.name}
-      </p>
-    }
-    return <p className={`slot slot${slot}`}/>
+    return <GameSlot gameSlot={game.slot} decision={slot} team={team} pickClass={pickClass} slotClickHandler={this.props.slotClickHandler} />
   }
 
   render() {
-    const { index, slot } = this.props
+    const { index, slot, slotClickHandler } = this.props
     const game = this.tournamentTree().gameNodes[slot]
     const bracketTree = this.bracketTree()
     const pick = bracketTree ? bracketTree.gameNodes[slot] : null
